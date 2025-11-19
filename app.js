@@ -2,7 +2,6 @@
 const { createApp } = Vue;
 
 function drawMap() {
-  console.log("si")
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
@@ -25,8 +24,22 @@ function drawMap() {
     let rows = 4;    
 
     const sources = [
-      "esempio.jpg",
-      
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
     ];
 
     let images = [];
@@ -74,100 +87,77 @@ function drawMap() {
 
 drawMap();
 
-class Model {
-  constructor() {
-    this.data = [];
-    this.subscribers = []; 
-  }
-
-  subscribe(callback) {
-    this.subscribers.push(callback);
-  }
-
-  notify() {
-    this.subscribers.forEach(callback => callback());
-  }
-
-  addData(item) {
-    const newItem = { id: Date.now(), description: item }; 
-    this.data.push(newItem);
-    this.notify(); 
-  }
-
-  getAllData() {
-    return this.data;
-  }
-}
-
-class Controller {
-  constructor(model) {
-    this.model = model;
-    // In un'architettura più pura, il Controller si registrerebbe qui.
-    // this.model.subscribe(() => this.updateView()); 
-  }
-
-  handleUserAction(itemDescription) {
-    if (itemDescription) {
-      this.model.addData(itemDescription); 
-
-    }
-  }
-  
-
-  getModelState() {
-      return this.model.getAllData();
-  }
-}
-
-const taskModel = new Model();
-const taskController = new Controller(taskModel);
-
-
 
 const app = createApp({
-    
     data() {
       return {
-        controller: taskController, 
-        model: taskModel, 
-        newItemDescription: '',
-        
-        items: taskModel.getAllData() 
+        contWheat: 0,
+        money: 0,
       }
     },
     
 
     methods: {
-      onHoverStart() {
-        const button = document.getElementById('bottoneStart');
+      onHoverStart(tipo='start') {
+        let button;
+        if(tipo == 'impostazioni') {
+          button = this.$refs.btnSetting;
+        }
+        else {
+          button = this.$refs.btnStart;
+        }
         button.style.transition = 'all 0.3s ease';
-        button.style.backgroundColor = 'blue';
-        button.style.boxShadow = '0 4px rgba(0, 0, 139, 0.6)';
+        button.style.backgroundColor = 'lightgreen';
+        button.style.boxShadow = '0 4px rgba(0,100,0,0.6)';
       },
-      onLeaveStart() {
-        const button = document.getElementById('bottoneStart');
+      onLeaveStart(tipo='start') {
+        let button;
+        if(tipo == 'impostazioni') {
+          button = this.$refs.btnSetting;
+        }
+        else {
+          button = this.$refs.btnStart;
+        }
         button.style.transition = 'all 0.3s ease';
         button.style.backgroundColor = '#4CAF50';
         button.style.boxShadow = '0 4px green';
       },
       startGame() {
         document.getElementById("menuGioco").style.display = "none";
+        document.getElementById("strutturaGioco").style.display = "block";
       },
-      updateReactiveItems() {
-        this.items = this.model.getAllData(); 
+      clickType1() {
+        const sellButton = this.$refs.sellButton;
+        sellButton.style.backgroundColor = 'rgba(3, 227, 3, 0.8)';
+        const button = this.$refs.primaryButton;
+        button.style.transform = "translateY(3px) scale(0.97)";
+        button.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.2)";
+        setTimeout(() => {
+          button.style.transform = "translateY(0) scale(1)";
+          button.style.boxShadow = "0 8px 16px rgba(0, 0, 0, 0.3)";
+        }, 80);
+        this.contWheat++;
+        if(this.contWheat == 10) {
+          const sellButton = this.$refs.sellButton;
+          sellButton.style.opacity = 1;
+          sellButton.style.pointerEvents = 'all';
+        }
+      },
+      sell() {
+        moneyEarned = this.contWheat * 2;
+        this.money += moneyEarned;
+        this.contWheat = 0;
+        const button = this.$refs.sellButton;
+        button.style.transform = "translateY(3px) scale(0.97)";
+        button.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.2)";
+        setTimeout(() => {
+          button.style.transform = "translateY(0) scale(1)";
+          button.style.boxShadow = "0 8px 16px rgba(0, 0, 0, 0.3)";
+        }, 80);
+        sellButton.style.backgroundColor = '#03a909ff';
       }
     },
     
-    mounted() {
-        // Registra la funzione di aggiornamento di Vue al Model
-        // Ogni volta che il Model chiama notify(), this.updateReactiveItems() viene eseguita.
-        this.model.subscribe(this.updateReactiveItems);
-        
-        // Esegui il primo rendering (se necessario)
-        this.updateReactiveItems();
-    }
 });
 
-
-// 🚀 Monte l'applicazione sul tag <div id="app"></div> (simulato)
 app.mount('#app');
