@@ -123,6 +123,7 @@ const app = createApp({
         button.style.boxShadow = '0 4px green';
       },
       startGame() {
+        this.$refs.overlayMap.style.opacity = '0';
         document.getElementById("menuGioco").style.display = "none";
         document.getElementById("strutturaGioco").style.display = "block";
       },
