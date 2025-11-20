@@ -33,7 +33,7 @@
             height: auto;
             bottom: 60vh;
             left: 41vw;
-            z-index: -9999;
+            z-index: -9998;
         }
         #containerTitolo {
             perspective: 27vh;
@@ -89,7 +89,7 @@
             background-color: rgba(0, 0, 0, 0.3);
             top: 0vh;
             left: 0vw;
-            z-index: -9998;
+            z-index: -9997;
         }
         #sellButton {
             position: fixed;
@@ -110,6 +110,15 @@
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
             transition: opacity 1s ease;
             pointer-events: none;
+        }
+        
+        #stradaSterrata {
+            position: fixed;
+            width: 4vw;
+            height: 47.5vh;
+            bottom: -5vh;
+            left: 48vw;
+            z-index: -9999;
         }
         #wheatCounter {
             position: fixed;
@@ -137,6 +146,22 @@
             margin-left: -4.8vw;
             transform: rotateX(25deg);
             text-shadow: 0 0 10px black;
+        }
+        .staccionataOrizzontale {
+            position: fixed;
+            width: 15vw;
+            height: 4vh;
+            bottom: 44.5vh;
+            left: 33vw;
+            z-index: -9998;
+        }
+        .staccionataVerticale {
+            position: fixed;
+            width: 0.4vw;
+            height: 22vh;
+            bottom: 45vh;
+            left: 33.3vw;
+            z-index: -9999;
         }
         .bottoniPagina {
             white-space: nowrap; 
@@ -193,7 +218,13 @@
         <div id="oggettiMappa" style="z-index: -9999;">
             <div id="overlayMappa"></div>
             <img src="barn.png" id="capanno">
-            
+            <img src="road.png" id="stradaSterrata">
+            <img src="horizontal_fence.png" class="staccionataOrizzontale">
+            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="left: 52.5vw;">
+            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="bottom: 63.5vh; z-index: -9999; left: 33.05vw;">
+            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="bottom: 63.5vh; z-index: -9999; left: 52.5vw; ">
+            <img src="vertical_fence.png" class="staccionataVerticale">
+            <img src="vertical_fence.png" class="staccionataVerticale" style="left: 67vw;">
         </div>
      </div>
 
