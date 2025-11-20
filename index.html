@@ -68,14 +68,14 @@
             width: 100vw;
             transform: rotateX(25deg);
         }
-        #primaryButton {
+        .primaryButton {
             position: fixed;
-            width: 10vw;
-            height: 17vh;
+            width: 5vw;
+            height: 9vh;
             border-radius: 50%;
             background-color: rgb(227, 227, 3);
-            top: 46vh;
-            left: 45vw;
+            top: 6vh;
+            left: 3vw;
             cursor: pointer;
             font-size: 4vh;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
@@ -91,27 +91,6 @@
             left: 0vw;
             z-index: -9997;
         }
-        #sellButton {
-            position: fixed;
-            width: 25vw;
-            height: 12vh;
-            border-radius: 8vw;
-            background-color: rgb(3, 227, 3, 0.8);
-            border: 2px solid black;
-            top: 75vh;
-            left: 37vw;
-            font-size: 4vh;
-            cursor: pointer;
-            display: flex;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            color: green;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-            transition: opacity 1s ease;
-            pointer-events: none;
-        }
-        
         #stradaSterrata {
             position: fixed;
             width: 4vw;
@@ -120,7 +99,7 @@
             left: 48vw;
             z-index: -9999;
         }
-        #wheatCounter {
+        .counter {
             position: fixed;
             width: 15vw;
             height: 5vh;
@@ -208,15 +187,15 @@
         </div>
 
         <div id="strutturaGioco" style="display: none;">
-            <button id="primaryButton" @click="clickType1" ref="primaryButton">🌽</button>
-            <div id="wheatCounter">{{ contWheat }}🌽</div>
+            <button class="primaryButton" @click="clickType1" ref="primaryButton">🌽</button>
+            <div class="counter">{{ contWheat }}🌽</div>
             <div id="moneyCounter">{{ money }}$</div>
-            <button id="sellButton" @click="sell" ref="sellButton" style="opacity: 0;"><h1>VENDI</h1></button>
+            <button class="primaryButton" @click="sell" ref="sellButton" style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); left: 10vw;">$</button>
 
         </div>
 
         <div id="oggettiMappa" style="z-index: -9999;">
-            <div id="overlayMappa"></div>
+            <div id="overlayMappa" ref="overlayMap"></div>
             <img src="barn.png" id="capanno">
             <img src="road.png" id="stradaSterrata">
             <img src="horizontal_fence.png" class="staccionataOrizzontale">
