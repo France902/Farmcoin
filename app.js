@@ -1,263 +1,233 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lezioni di Vue.js</title>
-    <style>
-        html, body {
-            overflow: hidden;
-        }
-        body { 
-            font-family: sans-serif; 
-            background-color: rgb(172, 247, 172);
-        }
-        h1 {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            text-align: center;
-            position: fixed;
-            z-index: 1;
-        }
-        h2 {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            text-align: center;
-            position: fixed;
-            z-index: 1;
-        }
-        #app {
-            position: absolute;
-        }
-        #capanno {
-            position: fixed;
-            width: 20vw;
-            height: auto;
-            bottom: 60vh;
-            left: 41vw;
-            z-index: -9998;
-        }
-        #containerTitolo {
-            perspective: 27vh;
-            width: 100vw;
-            height: 30vh;
-        }
-        #imgPrimaryButton {
-            width: 4vw;
-            height: auto;
-            position: fixed;
-            margin-left: -4.6vw;
-            margin-top: -0.8vh;
-        }
-        #lucchetttoImg {
-            width: 4vw;
-            height: auto;
-            position: fixed;
-            margin-left: -7.6vw;
-            margin-top: -1.2vh;
-        }
-        #moneyCounter {
-            position: fixed;
-            height: 6vh;
-            border-radius: 2vw;
-            background-color: rgb(43, 215, 4, 0.7);
-            border: 2px solid black;
-            display: inline-block;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            padding: 0.5vh 2vw;
-            font-size: 4vh;
-            left: 50%;
-            transform: translateX(-50%); 
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            white-space: nowrap; 
-            transform-origin: center center;
-        }
-        #sottoTitolo {
-            font-size: 4vh;
-            text-shadow: 0 0 2px black;
-            color: white;
-            position: absolute;
-            -webkit-text-stroke: 1.5px black;
-            top: 35vh;
-            width: 100vw;
-            transform: rotateX(25deg);
-        }
-        #overlayMappa {
-            position: fixed;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.3);
-            top: 0vh;
-            left: 0vw;
-            z-index: -9997;
-        }
-        #stradaSterrata {
-            position: fixed;
-            width: 4vw;
-            height: 47.5vh;
-            bottom: -5vh;
-            left: 48vw;
-            z-index: -9999;
-        }
-        .counter {
-            position: fixed;
-            width: 15vw;
-            height: 5vh;
-            border-radius: 4vw;
-            background-color: rgb(227, 227, 3, 0.8);
-            border: 2px solid black;
-            display: flex;
-            text-align: end;
-            justify-content: end;
-            align-items: center;
-            padding: 0.5vh 0.5vw;
-            font-size: 3vh;
-            left: 83vw;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        }
-        .primaryButton {
-            position: fixed;
-            width: 5vw;
-            height: 9vh;
-            border-radius: 50%;
-            background-color: rgb(227, 227, 3);
-            top: 6vh;
-            left: 3vw;
-            cursor: pointer;
-            font-size: 4vh;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            border: 1px solid black;
-            transition: transform 0.08s ease, opacity 1s ease;
-            pointer-events: none;
-        }
-        .titolo {
-            font-size: 37vh;
-            color: white;
-            -webkit-text-stroke: 2px black;
-            position: absolute;
-            transform-origin: center bottom;
-            margin-top: -10vh;
-            margin-left: -4.8vw;
-            transform: rotateX(25deg);
-            text-shadow: 0 0 10px black;
-        }
-        .staccionataOrizzontale {
-            position: fixed;
-            width: 15vw;
-            height: 4vh;
-            bottom: 44.5vh;
-            left: 33vw;
-            z-index: -9998;
-        }
-        .staccionataVerticale {
-            position: fixed;
-            width: 0.4vw;
-            height: 22vh;
-            bottom: 45vh;
-            left: 33.3vw;
-            z-index: -9999;
-        }
-        .rettangularButton {
-            position: fixed;
-            height: 9vh;
-            border-radius: 20%;
-            background-color: #03a909ff;
-            top: 38vh;
-            left: 2vw;
-            border: 1px solid rgb(1, 1, 168);
-            cursor: pointer;
-            font-size: 4vh;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            border: 1px solid black;
-            transition: transform 0.08s ease, opacity 1s ease;
-            padding-left: 5vw;
-            padding-right: 1vw; 
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            pointer-events: none;
-        }
-        .bottoniPagina {
-            white-space: nowrap; 
-            transform-origin: center center;
-            display: inline-block;
-            text-align: center;
-            justify-content: center;
-            align-items: center;
-            height: 10vh;
-            font-size: 5vh;
-            background-color: #4CAF50;
-            color: green;
-            border: none;
-            border-radius: 8vw;
-            cursor: pointer;
-            position: fixed;
-            z-index: 0;
-            box-shadow: 0 4px green;
-            opacity: 0.9;
-            top: 58vh;
-            transform-origin: center center;
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            font-weight: bold;
-            padding: 0.5vh 4vw;
-            left: 50%;
-            transform: translateX(-50%); 
-        }
-    </style>
-</head>
-<body>
-    <canvas id="canvas" style="position: fixed; z-index: -9999; opacity: 1; width: 100vw; height: 100vh; left: 0vw; top: 0vh;"></canvas>
-    <div id="app">
-        <div id="menuGioco">
-        <div id="containerTitolo">
-            <h1 class="titolo">FARMCOIN</h1>
-            <h1 id="sottoTitolo">A farming game made with love</h1>
-        </div>
-        <button class="bottoniPagina" id="bottoneStart" ref="btnStart" @mouseenter="onHoverStart" @mouseleave="onLeaveStart" @click="startGame">
-            START
-        </button>
-        <button class="bottoniPagina" id="bottoneSetting" ref="btnSetting" @mouseenter="onHoverStart('impostazioni')" @mouseleave="onLeaveStart('impostazioni')" @click="openSettings('impostazioni')" style="top: 73vh;">
-            SETTINGS
-        </button>
-        </div>
 
-        <div id="strutturaGioco" style="display: none;">
-            <button class="primaryButton" @click="clickType1" ref="primaryButton">🌽</button>
-            <div class="counter">{{ contWheat }}🌽</div>
-            <div id="moneyCounter">{{ money }}$</div>
-            <button class="primaryButton" @click="sell" ref="sellButton1" style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); left: 11vw;">$</button>
-            <h1 style="left: 85vw; top: -0.5vh; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" ref="textCycle1">lv. {{livelloUpgrade[0]+1}}</h1>
-            <button class="rettangularButton" @click="upgrade(0)" ref="upgradeButton1" style="opacity: 0;">
-                <img src="upgrade_icon.png" id="imgPrimaryButton">
-                {{ costoUpgrade[0] }}$
-            </button>
-            <button class="rettangularButton" @click="upgrade(0)" ref="upgradeButton1" style="opacity: 0;">
-                <img src="upgrade_icon.png" id="imgPrimaryButton">
-                {{ costoUpgrade[0] }}$
-            </button>
-            <button class="rettangularButton" @click="autoClicker(0)" ref="autoClicker1" style="opacity: 0; left: 20vw; top: 8vh; padding: 0.5vw; font-size: 3vh; background-color: rgb(166, 2, 2); border-radius: 15%;">
-                +{{contAutoClicker+1}} auto clicker {{ (contAutoClicker+1) * 100 }}$
-            </button>
-            <button class="rettangularButton" @click="" ref="unlockAreaButton" style="opacity: 0; width: 20vw; height: 10vh; top: 60vh; background-color: gray;">
-                <img src="lucchetto.png" id="lucchetttoImg">
-                {{ costoArea[0] }}$
-            </button>
-        </div>
+const { createApp } = Vue;
 
-        <div id="oggettiMappa" style="z-index: -9999;">
-            <div id="overlayMappa" ref="overlayMap"></div>
-            <img src="barn.png" id="capanno">
-            <img src="road.png" id="stradaSterrata">
-            <img src="horizontal_fence.png" class="staccionataOrizzontale">
-            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="left: 52.5vw;">
-            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="bottom: 63.5vh; z-index: -9999; left: 33.05vw;">
-            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="bottom: 63.5vh; z-index: -9999; left: 52.5vw; ">
-            <img src="vertical_fence.png" class="staccionataVerticale">
-            <img src="vertical_fence.png" class="staccionataVerticale" style="left: 67vw;">
-        </div>
-     </div>
+function drawMap() {
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
 
-   <script src="https://unpkg.com/vue@3"></script>
-   <script src="./app.js"></script>
-</body>
-</html>
+    const scaleFactor = 4;
+    canvas.width = window.innerWidth * scaleFactor;
+    canvas.height = window.innerHeight * scaleFactor;
+
+
+    canvas.style.width = '100vw';
+    canvas.style.height = '100vh';
+
+    function vw(v) { return window.innerWidth * (v / 100); }
+    function vh(v) { return window.innerHeight * (v / 100); }
+
+    let imgX = 200;   
+    let imgY = 50;   
+    let imgW = 100;    
+    let imgH = 100;    
+    let cols = 4;     
+    let rows = 4;    
+
+    const sources = [
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+      "giardino.jpg",
+    ];
+
+    let images = [];
+    let loadedCount = 0;
+
+    sources.forEach((src, i) => {
+    const img = new Image();
+    img.onload = () => {
+        loadedCount++;
+        if (loadedCount === sources.length) drawImages(); 
+    };
+    img.src = src;
+    images.push(img);
+    });
+
+    function drawImages() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const totalWidth = vw(imgW * cols);
+    const startX = vw(imgX) - totalWidth / 2;
+
+    for (let j = 0; j < cols; j++) {
+        for (let i = 0; i < rows; i++) {
+        const index = i * cols + j;
+        if (!images[index]) continue;
+
+        ctx.drawImage(
+            images[index],
+            startX + vw(j * imgW),
+            vh(imgY - imgH / 2 + i * imgH),
+            vw(imgW),
+            vh(imgH)
+        );
+        }
+    }
+    }
+
+    window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    drawImages();
+    });
+
+}
+
+drawMap();
+
+function animazioneBottone(button) {
+    button.style.transform = "translateY(3px) scale(0.97)";
+    button.style.boxShadow = "0 2px 4px rgba(0, 0, 0, 0.2)";
+    setTimeout(() => {
+      button.style.transform = "translateY(0) scale(1)";
+      button.style.boxShadow = "0 8px 16px rgba(0, 0, 0, 0.3)";
+    }, 80);
+  }
+
+const app = createApp({
+    data() {
+      return {
+        contWheat: 0,
+        money: 0,
+        contSell: 0,
+        contAutoClicker: 0,
+        costoUpgrade: [10],
+        costoArea: [500],
+        moltiplicatoreUpgrade: [1.5],
+        livelloUpgrade: [0],
+        autoClickerCost: [100],
+      }
+    },
+    
+
+    methods: {
+      onHoverStart(tipo='start') {
+        let button;
+        if(tipo == 'impostazioni') {
+          button = this.$refs.btnSetting;
+        }
+        else {
+          button = this.$refs.btnStart;
+        }
+        button.style.transition = 'all 0.3s ease';
+        button.style.backgroundColor = 'lightgreen';
+        button.style.boxShadow = '0 4px rgba(0,100,0,0.6)';
+      },
+      onLeaveStart(tipo='start') {
+        let button;
+        if(tipo == 'impostazioni') {
+          button = this.$refs.btnSetting;
+        }
+        else {
+          button = this.$refs.btnStart;
+        }
+        button.style.transition = 'all 0.3s ease';
+        button.style.backgroundColor = '#4CAF50';
+        button.style.boxShadow = '0 4px green';
+      },
+      startGame() {
+        this.$refs.overlayMap.style.opacity = '0';
+        document.getElementById("menuGioco").style.display = "none";
+        document.getElementById("strutturaGioco").style.display = "block";
+        this.$refs.primaryButton.style.pointerEvents = 'all';
+      },
+      clickType1() {
+        const sellButton = this.$refs.sellButton1;
+        sellButton.style.backgroundColor = 'rgba(3, 227, 3, 0.8)';
+        const button = this.$refs.primaryButton;
+        animazioneBottone(button);
+        this.contWheat = Math.round((this.contWheat + 1 + (0.1 * this.livelloUpgrade[0]) ) * 10) / 10;
+        if(this.contWheat == 10) {
+          const sellButton = this.$refs.sellButton1;
+          sellButton.style.opacity = 1;
+          sellButton.style.pointerEvents = 'all';
+        }
+      },
+      sell() {
+        if(this.contSell == 0) {
+          const textCycle = this.$refs.textCycle1;
+          textCycle.style.opacity = 1;
+          const button = this.$refs.upgradeButton1;
+          if(this.money >= this.costoUpgrade[0]) {
+          const upgradeButton = this.$refs.upgradeButton1;
+          upgradeButton.style.backgroundColor = 'rgba(3, 227, 3, 0.8)';
+        }
+          button.style.opacity = 1;
+          button.style.pointerEvents = 'all';
+        }
+        this.contSell++;
+        moneyEarned = this.contWheat * 2;
+        this.money += Math.round(moneyEarned * 10) / 10;
+        this.contWheat = 0;
+        const button = this.$refs.sellButton1;
+        animazioneBottone(button);
+        button.style.backgroundColor = '#03a909ff';
+        if(this.money >= this.costoUpgrade[0]) {
+          const upgradeButton = this.$refs.upgradeButton1;
+          upgradeButton.style.backgroundColor = 'rgba(3, 227, 3, 0.8)';
+        }
+        if(this.money > 100) {
+          this.$refs.autoClicker1.style.backgroundColor = 'red';
+        }
+      },
+      upgrade(num) {
+        switch(num) {
+          case 0:
+            var button = this.$refs.upgradeButton1;
+            break;
+        }
+        if(this.money >= this.costoUpgrade[num]) {
+          animazioneBottone(button);
+          this.money -= Math.round(this.costoUpgrade[num] * 10) / 10;
+          this.money = Number(this.money.toFixed(1))
+          this.livelloUpgrade[num]++;
+          this.costoUpgrade[num] = Math.floor(this.costoUpgrade[num] * this.moltiplicatoreUpgrade[num]);
+          if(this.money < this.costoUpgrade[num]) {
+            button.style.backgroundColor = '#03a909ff';
+          }
+          if(this.livelloUpgrade[num] == 6) {
+            const button = this.$refs.autoClicker1;
+            button.style.opacity = 1;
+            button.style.pointerEvents = 'all';
+            if(this.money > 100) {
+              button.style.backgroundColor = 'red';
+          }
+          else if(this.livelloUpgrade[num] == 7) {
+            const button = this.$refs.unlockAreaButton;
+            button.style.opacity = 1;
+            button.style.pointerEvents = 'all';
+          }
+        }
+        }
+        
+      },
+      autoClicker(num) {
+        switch(num) {
+          case 0:
+            if(this.money < autoClickerCost[num]) return;
+            setInterval(() => {
+              this.contWheat += this.contAutoClicker;
+            }, 1000);
+            break;
+        }
+        this.contAutoClicker++;
+        this.money -= autoClickerCost[num];
+        this.money = Number(this.money.toFixed(1));
+        autoClickerCost[num] += 100;
+    },
+  }
+});
+
+app.mount('#app');
