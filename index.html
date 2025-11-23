@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lezioni di Vue.js</title>
+
     <style>
+        /* Reset e comportamento touch: disabilita scroll e selezione testo per evitare gesti non voluti in game */
         html, body {
             overflow: hidden;
             -webkit-user-select: none;
@@ -14,10 +16,14 @@
             -webkit-tap-highlight-color: transparent;
             -webkit-touch-callout: none;
         }
-        body { 
-            font-family: sans-serif; 
+
+        /* Body: font di sistema e colore di sfondo. L'uso di system fonts aiuta performance e coerenza */
+        body {
+            font-family: sans-serif;
             background-color: rgb(172, 247, 172);
         }
+
+        /* Titoli principali: posizione fissa e z-index alto per apparire sopra la UI */
         h1 {
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
             text-align: center;
@@ -30,9 +36,11 @@
             position: fixed;
             z-index: 1;
         }
-        #app {
-            position: absolute;
-        }
+
+        /* Contenitore app: posizionamento assoluto per sovrapporre elementi */
+        #app { position: absolute; }
+
+        /* Immagine capanno posizionata con fixed*/
         #capanno {
             position: fixed;
             width: 20vw;
@@ -41,11 +49,15 @@
             left: 41vw;
             z-index: -9998;
         }
+
+        /* Contenitore titolo: prospettiva per effetto 3D su testo sottostante */
         #containerTitolo {
             perspective: 27vh;
             width: 100vw;
             height: 30vh;
         }
+
+        /* Icone di pulsanti*/
         #imgPrimaryButton {
             width: 4vw;
             height: auto;
@@ -60,12 +72,14 @@
             margin-left: -7.6vw;
             margin-top: -1.8vh;
         }
+
+        /* Money counter: centrato e con dimensione fissa in vh */
         #moneyCounter {
             position: fixed;
             height: 6vh;
             border-radius: 2vw;
             background-color: rgb(43, 215, 4, 0.7);
-            border: 2px solid black;
+            border: 0.2vw solid black;
             display: inline-block;
             text-align: center;
             justify-content: center;
@@ -73,30 +87,37 @@
             padding: 0.5vh 2vw;
             font-size: 4vh;
             left: 50%;
-            transform: translateX(-50%); 
+            transform: translateX(-50%);
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            white-space: nowrap; 
+            white-space: nowrap;
             transform-origin: center center;
         }
+
+        /* Sotto titolo con effetto testo 3D (rotateX) */
         #sottoTitolo {
             font-size: 4vh;
-            text-shadow: 0 0 2px black;
+            text-shadow: 0 0 0.2vw black;
             color: white;
             position: absolute;
-            -webkit-text-stroke: 1.5px black;
+            -webkit-text-stroke: 0.1vw black;
             top: 35vh;
             width: 100vw;
             transform: rotateX(25deg);
         }
+
+        /* Overlay mappa: usato come maschera scura*/
         #overlayMappa {
             position: fixed;
             width: 100vw;
             height: 100vh;
-            background-color: rgba(0, 0, 0, 0.3);
+            background-color: rgb(0, 0, 0);
+            opacity: 0.3;
             top: 0vh;
             left: 0vw;
             z-index: -9997;
         }
+
+        /* Elementi grafici posizionati e con z-index molto basso per stare sotto la UI */
         #stradaSterrata {
             position: fixed;
             width: 4vw;
@@ -105,22 +126,28 @@
             left: 48vw;
             z-index: -9999;
         }
+
+        /* Contatore risorse piccolo in basso */
         .counter {
             position: fixed;
             width: 15vw;
             height: 5vh;
             border-radius: 4vw;
             background-color: rgb(227, 227, 3, 0.8);
-            border: 2px solid black;
+            border: 0.2vw solid black;
             display: flex;
             text-align: end;
             justify-content: end;
             align-items: center;
             padding: 0.5vh 0.5vw;
             font-size: 3vh;
-            left: 83vw;
+            top: 90vh;
             font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
+
+        /* Pulsanti circolari principali: pointer-events inizialmente none, abilitati in JS*/
         .primaryButton {
             position: fixed;
             width: 5vw;
@@ -131,22 +158,26 @@
             margin-left: 3vw;
             cursor: pointer;
             font-size: 4vh;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            border: 1px solid black;
+            box-shadow: 0 0.4vw 0.8vw rgba(0, 0, 0, 0.3);
+            border: 0.15vw solid black;
             transition: transform 0.08s ease, opacity 1s ease;
             pointer-events: none;
         }
+
+        /* Titolo gigante con testo stroke */
         .titolo {
             font-size: 37vh;
             color: white;
-            -webkit-text-stroke: 2px black;
+            -webkit-text-stroke: 0.5vw black;
             position: absolute;
             transform-origin: center bottom;
             margin-top: -10vh;
-            margin-left: -4.8vw;
+            margin-left: 0vw;
             transform: rotateX(25deg);
-            text-shadow: 0 0 10px black;
+            text-shadow: 0 0 10vw black;
         }
+
+        /* Recinzioni come immagini posizionate */
         .staccionataOrizzontale {
             position: fixed;
             width: 15vw;
@@ -163,28 +194,32 @@
             left: 33.3vw;
             z-index: -9999;
         }
+
+        /* Pulsante rettangolare usato per upgrade e unlock.*/
         .rettangularButton {
             position: fixed;
             height: 9vh;
             border-radius: 20%;
             background-color: #03a909ff;
-            margin-top: 38vh;
+            margin-top: 34vh;
             margin-left: 2vw;
-            border: 1px solid rgb(1, 1, 168);
+            border: 1vw solid rgb(1, 1, 168);
             cursor: pointer;
             font-size: 4vh;
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            border: 1px solid black;
+            box-shadow: 0 8vw 16vw rgba(0, 0, 0, 0.3);
+            border: 0.15vw solid black;
             transition: transform 0.08s ease, opacity 1s ease;
             padding-left: 5vw;
-            padding-right: 1vw; 
+            padding-right: 1vw;
             text-align: center;
             justify-content: center;
             align-items: center;
             pointer-events: none;
         }
+
+        /* Bottoni di pagina principali*/
         .bottoniPagina {
-            white-space: nowrap; 
+            white-space: nowrap;
             transform-origin: center center;
             display: inline-block;
             text-align: center;
@@ -199,7 +234,7 @@
             cursor: pointer;
             position: fixed;
             z-index: 0;
-            box-shadow: 0 4px green;
+            box-shadow: 0 0.3vw green;
             opacity: 0.9;
             top: 58vh;
             transform-origin: center center;
@@ -207,48 +242,116 @@
             font-weight: bold;
             padding: 0.5vh 4vw;
             left: 50%;
-            transform: translateX(-50%); 
+            transform: translateX(-50%);
         }
     </style>
 </head>
+
 <body>
+    <!-- CANVAS di sfondo: gestito da drawMap() in JS -->
     <canvas id="canvas" style="position: fixed; z-index: -9999; opacity: 1; width: 100vw; height: 100vh; left: 0vw; top: 0vh;"></canvas>
+
+    <!-- ROOT VUE -->
     <div id="app">
-        <div id="menuGioco">
-        <div id="containerTitolo">
-            <h1 class="titolo">FARMCOIN</h1>
-            <h1 id="sottoTitolo">A farming game made with love</h1>
-        </div>
-        <button class="bottoniPagina" id="bottoneStart" ref="btnStart" @mouseenter="onHoverStart" @mouseleave="onLeaveStart" @click="startGame">
-            START
-        </button>
-        <button class="bottoniPagina" id="bottoneSetting" ref="btnSetting" @mouseenter="onHoverStart('impostazioni')" @mouseleave="onLeaveStart('impostazioni')" @click="openSettings('impostazioni')" style="top: 73vh;">
-            SETTINGS
-        </button>
+
+        <!-- MENU INIZIALE: start/setting ecc. -->
+        <div id="menuGioco" style="position: fixed;">
+            <div id="containerTitolo">
+                <!-- Titolo principale grafico -->
+                <h1 class="titolo">FARMCOIN</h1>
+
+                <!-- Sottotitolo: usa transform 3D -->
+                <h1 id="sottoTitolo">A farming game made with love</h1>
+            </div>
+
+            <!-- Pulsante Start: usa ref Vue per manipolazione diretta -->
+            <button class="bottoniPagina"
+                    id="bottoneStart"
+                    ref="btnStart"
+                    @mouseenter="onHoverStart"
+                    @mouseleave="onLeaveStart"
+                    @click="startGame">
+                START
+            </button>
+
+            <!-- SETTINGS commentato: indicazione di feature future -->
+            <!--
+            <button class="bottoniPagina" id="bottoneSetting" ref="btnSetting" ...>SETTINGS</button>
+            -->
         </div>
 
-        <div id="strutturaGioco" style="display: none;">
-                <div class="counter">{{ contMais }}🌽</div>
-                <div class="counter" style="top: 10vh; background-color: orange;">{{ contCarrot }}🥕</div>
-                <div id="moneyCounter">{{ money }}$</div>
-                <h1 style="left: 85vw; top: -0.5vh; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[0]+1}}</h1>
-                <h1 style="left: 85vw; top: 9vh; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[1]+1}}</h1>
-            <div ref="firstArea" style="position: absolute; width: 30vw; height: 30vh; z-index: 9999;">
+        <!-- SCHERMATA VITTORIA: inizialmente nascosta -->
+        <div id="schermataVittoria" style="display: none;" ref="victoryScreen">
+            <!-- Overlay scuro con ref -->
+            <div id="overlayMappa" ref="overlayMap" style="z-index: 9999; opacity: 0.5;"></div>
+
+            <h1 class="titolo" style="font-size: 7vh; top: 30vh; left: 33vw; z-index: 10000;">CONGRATULATIONS!</h1>
+
+            <!-- Restart e Continue: usano refs per hover e click control -->
+            <button class="bottoniPagina" id="bottoneRestart" ref="btnRestart"
+                    @mouseenter="onHoverStart('restart')"
+                    @mouseleave="onLeaveStart('restart')"
+                    @click="restartGame"
+                    style="top: 40vh; width: 30vw; z-index: 10000;">
+                RESTART
+            </button>
+
+            <button class="bottoniPagina" id="bottoneContinue" ref="btnContinue"
+                    @mouseenter="onHoverStart('continue')"
+                    @mouseleave="onLeaveStart('continue')"
+                    @click="continueGame"
+                    style="top: 40vh; width: 30vw; z-index: 10000;">
+                CONTINUE
+            </button>
+        </div>
+
+        <!-- STRUTTURA DI GIOCO: contiene risorse, contatori e aree -->
+        <div id="strutturaGioco" style="display: none; z-index: 9998;">
+            <!-- Contatori risorse con binding Vue -->
+            <div class="counter" :ref="el => counterButtons.push(el)">{{ contMais }}🌽</div>
+            <div class="counter" :ref="el => counterButtons.push(el)" style="left: 35vh; background-color: orange;">{{ contCarrot }}🥕</div>
+            <div class="counter" :ref="el => counterButtons.push(el)" style="left: 70vh; background-color: rgb(188, 2, 2);">{{ contTomatoes }}🍅</div>
+            <div class="counter" :ref="el => counterButtons.push(el)" style="left: 105vh; background-color: purple;">{{ contPotatoes }}🥔</div>
+
+            <!-- Money counter centrale -->
+            <div id="moneyCounter">{{ money }}$</div>
+
+            <!-- Testi di livello: vengono pushati nell'array textCycle tramite :ref anonimo -->
+            <h1 style="top: 88.5vh; left: 2vw; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[0]+1}}</h1>
+            <h1 style="left: 20vw; top: 88.5vh; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[1]+1}}</h1>
+            <h1 style="left: 38vw; top: 88.5vh; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[2]+1}}</h1>
+            <h1 style="left: 56vw; top: 88.5vh; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[3]+1}}</h1>
+
+            <!-- FIRST AREA: elementi interattivi per la prima risorsa -->
+            <div ref="firstArea" style="position: absolute; width: 30vw; height: 30vh; z-index: 9998; top: -5vh;">
                 <button class="primaryButton" @click="click(0)" :ref="el => clickButtons.push(el)">🌽</button>
-                <button class="primaryButton" @click="sell(0)" :ref="el => sellButtons.push(el)" style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); margin-left: 11vw;">$</button>
+
+                <!-- Pulsante vendi: nascosto con opacity 0 finché risorsa < 10 -->
+                <button class="primaryButton" @click="sell(0)" :ref="el => sellButtons.push(el)"
+                        style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); margin-left: 11vw;">$</button>
+
+                <!-- Upgrade button: inizialmente invisibile, contenente icona -->
                 <button class="rettangularButton" @click="upgrade(0)" :ref="el => upgradeButtons.push(el)" style="opacity: 0;">
                     <img src="upgrade_icon.png" id="imgPrimaryButton">
                     {{ costoUpgrade[0] }}$
                 </button>
-                <button class="rettangularButton" @click="autoClicker(0)" :ref="el => autoClickers.push(el)" style="opacity: 0; margin-left: 20vw; margin-top: 8vh; padding: 0.5vw; font-size: 3vh; background-color: rgb(166, 2, 2); border-radius: 15%;">
+
+                <!-- Auto-clicker: nascosto finché non sbloccato via upgrade -->
+                <button class="rettangularButton" @click="autoClicker(0)" :ref="el => autoClickers.push(el)"
+                        style="opacity: 0; margin-left: 20vw; margin-top: 8vh; padding: 0.5vw; font-size: 3vh; background-color: rgb(166, 2, 2); border-radius: 15%;">
                     +{{contAutoClicker[0]+1}} auto clicker {{ (contAutoClicker[0]+1) * 100 }}$
                 </button>
             </div>
-            <button class="rettangularButton" @click="unlockArea(1)" ref="unlockAreaButton" style="opacity: 0; width: 20vw; height: 10vh; top: 30vh; background-color: gray;">
+
+            <!-- Bottone sblocco area 2 -->
+            <button class="rettangularButton" @click="unlockArea(1)" :ref="el => unlockAreaButtons.push(el)"
+                    style="opacity: 0; width: 20vw; height: 10vh; top: 30vh; background-color: gray;">
                 <img src="lucchetto.png" id="lucchetttoImg">
                 {{ costoArea[0] }}$
             </button>
-            <div ref="secondArea" style=" top: 50vh; z-index: 9998; position: absolute; pointer-events: none; width: 50vw; height: 50vh; display: none;">
+
+            <!-- SECOND AREA: inizialmente display none e pointer-events none -->
+            <div ref="secondArea" style=" top: 42vh; z-index: 9998; position: absolute; pointer-events: none; width: 50vw; height: 50vh; display: none;">
                 <button class="primaryButton" @click="click(1)" :ref="el => clickButtons.push(el)" style="background-color: orange;">🥕</button>
                 <button class="primaryButton" @click="sell(1)" :ref="el => sellButtons.push(el)" style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); margin-left: 11vw;">$</button>
                 <button class="rettangularButton" @click="upgrade(1)" :ref="el => upgradeButtons.push(el)" style="opacity: 0;">
@@ -259,21 +362,63 @@
                     +{{contAutoClicker[1]+1}} auto clicker {{ (contAutoClicker[1]+1) * 220 }}$
                 </button>
             </div>
+
+            <!-- Bottone sblocco area 3 -->
+            <button class="rettangularButton" @click="unlockArea(2)" :ref="el => unlockAreaButtons.push(el)"
+                    style="opacity: 0; width: 20vw; height: 10vh; left: 75vw; top: -15vh; background-color: gray;">
+                <img src="lucchetto.png" id="lucchetttoImg">
+                {{ costoArea[1] }}$
+            </button>
+
+            <!-- THIRD AREA -->
+            <div ref="thirdArea" style="left: 75vw; top: -5vh; z-index: 9998; position: absolute; pointer-events: none; width: 50vw; height: 50vh; display: none;">
+                <button class="primaryButton" @click="click(2)" :ref="el => clickButtons.push(el)" style="background-color: rgb(188, 2, 2); margin-left: 17vw;">🍅</button>
+                <button class="primaryButton" @click="sell(2)" :ref="el => sellButtons.push(el)" style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); margin-left: 11vw;">$</button>
+                <button class="rettangularButton" @click="upgrade(2)" :ref="el => upgradeButtons.push(el)" style="opacity: 0; margin-left: 12vw;">
+                    <img src="upgrade_icon.png" id="imgPrimaryButton">
+                    {{ costoUpgrade[2] }}$
+                </button>
+                <button class="rettangularButton" @click="autoClicker(2)" :ref="el => autoClickers.push(el)" style="opacity: 0; margin-left: -7vw; margin-top: 8vh; padding: 0.5vw; font-size: 3vh; background-color: rgb(166, 2, 2); border-radius: 15%;">
+                    +{{contAutoClicker[2]+1}} auto clicker {{ (contAutoClicker[2]+1) * 500 }}$
+                </button>
+            </div>
+
+            <!-- Bottone sblocco area 4 -->
+            <button class="rettangularButton" @click="unlockArea(3)" :ref="el => unlockAreaButtons.push(el)"
+                    style="opacity: 0; width: 20vw; height: 10vh; left: 75vw; top: 30vh; background-color: gray;">
+                <img src="lucchetto.png" id="lucchetttoImg">
+                {{ costoArea[2] }}$
+            </button>
+
+            <!-- FOURTH AREA -->
+            <div ref="fourthArea" style="left: 75vw; top: 42vh; z-index: 9998; position: absolute; pointer-events: none; width: 50vw; height: 50vh; display: none;">
+                <button class="primaryButton" @click="click(3)" :ref="el => clickButtons.push(el)" style="background-color: rgb(188, 2, 2); margin-left: 17vw;">🥔</button>
+                <button class="primaryButton" @click="sell(3)" :ref="el => sellButtons.push(el)" style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); margin-left: 11vw;">$</button>
+                <button class="rettangularButton" @click="upgrade(3)" :ref="el => upgradeButtons.push(el)" style="opacity: 0; margin-left: 12vw;">
+                    <img src="upgrade_icon.png" id="imgPrimaryButton">
+                    {{ costoUpgrade[3] }}$
+                </button>
+                <button class="rettangularButton" @click="autoClicker(3)" :ref="el => autoClickers.push(el)" style="opacity: 0; margin-left: -7vw; margin-top: 8vh; padding: 0.5vw; font-size: 3vh; background-color: rgb(166, 2, 2); border-radius: 15%;">
+                    +{{contAutoClicker[3]+1}} auto clicker {{ (contAutoClicker[3]+1) * 500 }}$
+                </button>
+            </div>
         </div>
 
+        <!-- OGGETTI DI MAPPA: immagini decorative posizionate sotto la UI -->
         <div id="oggettiMappa" style="z-index: -9999;">
-            <div id="overlayMappa" ref="overlayMap"></div>
-            <img src="barn.png" id="capanno">
-            <img src="road.png" id="stradaSterrata">
-            <img src="horizontal_fence.png" class="staccionataOrizzontale">
-            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="left: 52.5vw;">
-            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="bottom: 63.5vh; z-index: -9999; left: 33.05vw;">
-            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="bottom: 63.5vh; z-index: -9999; left: 52.5vw; ">
-            <img src="vertical_fence.png" class="staccionataVerticale">
-            <img src="vertical_fence.png" class="staccionataVerticale" style="left: 67vw;">
+            <div id="overlayMappa" ref="overlayMap"></div> 
+            <img src="barn.png" id="capanno" alt="Capanno">
+            <img src="road.png" id="stradaSterrata" alt="Strada">
+            <img src="horizontal_fence.png" class="staccionataOrizzontale" alt="Recinzione orizzontale">
+            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="left: 52.5vw;" alt="Recinzione orizzontale">
+            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="bottom: 63.5vh; z-index: -9999; left: 33.05vw;" alt="Recinzione orizzontale">
+            <img src="horizontal_fence.png" class="staccionataOrizzontale" style="bottom: 63.5vh; z-index: -9999; left: 52.5vw; " alt="Recinzione orizzontale">
+            <img src="vertical_fence.png" class="staccionataVerticale" alt="Recinzione verticale">
+            <img src="vertical_fence.png" class="staccionataVerticale" style="left: 67vw;" alt="Recinzione verticale">
         </div>
      </div>
 
+   <!-- Vue e JS app -->
    <script src="https://unpkg.com/vue@3"></script>
    <script src="./app.js"></script>
 </body>
