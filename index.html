@@ -46,8 +46,58 @@
             width: 20vw;
             height: auto;
             bottom: 60vh;
-            left: 41vw;
+            left: 40.2vw;
             z-index: -9998;
+        }
+
+        #silo {
+            position: fixed;
+            width: 4.5vw;
+            height: auto;
+            bottom: 45vh;
+            left: 34vw;
+            z-index: -9998;
+        }
+
+        #ballaFieno {
+            position: fixed;
+            width: 3.5vw;
+            height: auto;
+            bottom: 46vh;
+            left: 63.8vw;
+            z-index: -9998;
+        }
+
+        #cesti {
+            position: fixed;
+            width: 3.5vw;
+            height: auto;
+            bottom: 60vh;
+            left: 60vw;
+            z-index: -9998;
+        }
+
+        #coltura {
+            position: fixed;
+            width: 1.8vw;
+            height: auto;
+            bottom: 83vh;
+            left: 0vw;
+            z-index: -9999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        #tilemap {
+            position: fixed;
+            width: 22vw;
+            height: 17vh;
+            bottom: 71vh;
+            left: 3vw;
+            z-index: -9999;
+            border-radius: 13%;
+            opacity: 0;
+            transition: opacity 1s ease;
         }
 
         /* Contenitore titolo: prospettiva per effetto 3D su testo sottostante */
@@ -129,7 +179,7 @@
 
         /* Contatore risorse piccolo in basso */
         .counter {
-            position: fixed;
+            position: absolute;
             width: 15vw;
             height: 5vh;
             border-radius: 4vw;
@@ -166,15 +216,18 @@
 
         /* Titolo gigante con testo stroke */
         .titolo {
-            font-size: 37vh;
+            font-size: 27vh;
             color: white;
             -webkit-text-stroke: 0.5vw black;
-            position: absolute;
-            transform-origin: center bottom;
-            margin-top: -10vh;
-            margin-left: 0vw;
-            transform: rotateX(25deg);
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%) rotateX(25deg);
+            transform-origin: center center;
+            text-align: center;
+            margin: 0;
             text-shadow: 0 0 10vw black;
+            z-index: 1;
         }
 
         /* Recinzioni come immagini posizionate */
@@ -285,14 +338,14 @@
             <!-- Overlay scuro con ref -->
             <div id="overlayMappa" ref="overlayMap" style="z-index: 9999; opacity: 0.5;"></div>
 
-            <h1 class="titolo" style="font-size: 7vh; top: 30vh; left: 33vw; z-index: 10000;">CONGRATULATIONS!</h1>
+            <h1 class="titolo" style="font-size: 7vh; top: 30vh; left: 50vw; z-index: 10000; -webkit-text-stroke: 0.3vw black;">CONGRATULATIONS!<br>YOU WON!</h1>
 
             <!-- Restart e Continue: usano refs per hover e click control -->
             <button class="bottoniPagina" id="bottoneRestart" ref="btnRestart"
                     @mouseenter="onHoverStart('restart')"
                     @mouseleave="onLeaveStart('restart')"
                     @click="restartGame"
-                    style="top: 40vh; width: 30vw; z-index: 10000;">
+                    style="top: 60vh; width: 30vw; z-index: 10000;">
                 RESTART
             </button>
 
@@ -300,7 +353,7 @@
                     @mouseenter="onHoverStart('continue')"
                     @mouseleave="onLeaveStart('continue')"
                     @click="continueGame"
-                    style="top: 40vh; width: 30vw; z-index: 10000;">
+                    style="top: 45vh; width: 30vw; z-index: 10000;">
                 CONTINUE
             </button>
         </div>
@@ -308,19 +361,21 @@
         <!-- STRUTTURA DI GIOCO: contiene risorse, contatori e aree -->
         <div id="strutturaGioco" style="display: none; z-index: 9998;">
             <!-- Contatori risorse con binding Vue -->
-            <div class="counter" :ref="el => counterButtons.push(el)">{{ contMais }}🌽</div>
-            <div class="counter" :ref="el => counterButtons.push(el)" style="left: 35vh; background-color: orange;">{{ contCarrot }}🥕</div>
-            <div class="counter" :ref="el => counterButtons.push(el)" style="left: 70vh; background-color: rgb(188, 2, 2);">{{ contTomatoes }}🍅</div>
-            <div class="counter" :ref="el => counterButtons.push(el)" style="left: 105vh; background-color: purple;">{{ contPotatoes }}🥔</div>
+            <div class="counter" :ref="el => counterButtons.push(el)">{{ contMais }}🌽
+                <h1 style="transition: opacity 1s ease; opacity: 1; font-size: 3.3vh; position: fixed; left: 2vw;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[0]+1}}</h1>
+            </div>
+            <div class="counter" :ref="el => counterButtons.push(el)" style="left: 35vh; background-color: orange;">{{ contCarrot }}🥕
+                <h1 style="transition: opacity 1s ease; opacity: 1; font-size: 3.3vh; position: fixed; left: 21vw;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[1]+1}}</h1>
+            </div>
+            <div class="counter" :ref="el => counterButtons.push(el)" style="left: 70vh; background-color: rgb(188, 2, 2);">{{ contTomatoes }}🍅
+                <h1 style="transition: opacity 1s ease; opacity: 1; font-size: 3.3vh; position: fixed; left: 40.7vw;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[2]+1}}</h1>
+            </div>
+            <div class="counter" :ref="el => counterButtons.push(el)" style="left: 105vh; background-color: purple;">{{ contPotatoes }}🥔
+                <h1 style="transition: opacity 1s ease; opacity: 1; font-size: 3.3vh; position: fixed; left: 60.3vw;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[3]+1}}</h1>
+            </div>
 
             <!-- Money counter centrale -->
             <div id="moneyCounter">{{ money }}$</div>
-
-            <!-- Testi di livello: vengono pushati nell'array textCycle tramite :ref anonimo -->
-            <h1 style="top: 88.5vh; left: 2vw; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[0]+1}}</h1>
-            <h1 style="left: 20vw; top: 88.5vh; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[1]+1}}</h1>
-            <h1 style="left: 38vw; top: 88.5vh; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[2]+1}}</h1>
-            <h1 style="left: 56vw; top: 88.5vh; transition: opacity 1s ease; opacity: 0; font-size: 3.3vh;" :ref="el => textCycle.push(el)">lv. {{livelloUpgrade[3]+1}}</h1>
 
             <!-- FIRST AREA: elementi interattivi per la prima risorsa -->
             <div ref="firstArea" style="position: absolute; width: 30vw; height: 30vh; z-index: 9998; top: -5vh;">
@@ -407,14 +462,25 @@
         <!-- OGGETTI DI MAPPA: immagini decorative posizionate sotto la UI -->
         <div id="oggettiMappa" style="z-index: -9999;">
             <div id="overlayMappa" ref="overlayMap"></div> 
-            <img src="barn.png" id="capanno" alt="Capanno">
-            <img src="road.png" id="stradaSterrata" alt="Strada">
+            <img src="silo.png" id="silo" style="bottom: 55vh;">
+            <img src="silo.png" id="silo">
+            <img src="cesti.png" id="cesti">
+            <img src="cesti.png" id="cesti" style="left: 63.5vw;">
+            <img src="HayBale.png" id="ballaFieno" style="bottom: 52vh;">
+            <img src="HayBale.png" id="ballaFieno">
+            <img src="barn.png" id="capanno">
+            <img src="road.png" id="stradaSterrata">
             <img src="horizontal_fence.png" class="staccionataOrizzontale" alt="Recinzione orizzontale">
             <img src="horizontal_fence.png" class="staccionataOrizzontale" style="left: 52.5vw;" alt="Recinzione orizzontale">
             <img src="horizontal_fence.png" class="staccionataOrizzontale" style="bottom: 63.5vh; z-index: -9999; left: 33.05vw;" alt="Recinzione orizzontale">
             <img src="horizontal_fence.png" class="staccionataOrizzontale" style="bottom: 63.5vh; z-index: -9999; left: 52.5vw; " alt="Recinzione orizzontale">
             <img src="vertical_fence.png" class="staccionataVerticale" alt="Recinzione verticale">
             <img src="vertical_fence.png" class="staccionataVerticale" style="left: 67vw;" alt="Recinzione verticale">
+            <img src="tilemap.png" id="tilemap" :ref="el => tilemaps.push(el)">
+            <img src="tilemap.png" id="tilemap" style="bottom: 24vh;" :ref="el => tilemaps.push(el)">
+            <img src="tilemap.png" id="tilemap" style="left: 77vw;" :ref="el => tilemaps.push(el)">
+            <img src="tilemap.png" id="tilemap" style="bottom: 24vh; left: 77vw;" :ref="el => tilemaps.push(el)">
+            
         </div>
      </div>
 
