@@ -137,19 +137,22 @@ const app = createApp({
         contAutoClicker: [0, 0, 0, 0],
 
         // Costo dell’upgrade di ciascuna risorsa
-        costoUpgrade: [10, 100, 400, 1100],
+        costoUpgrade: [10, 80, 350, 1000],
 
         // Costo per sbloccare nuove aree di gioco
-        costoArea: [200, 600, 3000],
+        costoArea: [200, 550, 2000],
 
         // Fattore di moltiplicazione applicato al costo upgrade dopo ogni acquisto
-        moltiplicatoreUpgrade: [1.4, 1.4, 1.4, 1.4],
+        moltiplicatoreUpgrade: [1.3, 1.3, 1.3, 1.3],
 
         // Livello dell’upgrade di ciascuna risorsa
         livelloUpgrade: [0, 0, 0, 0],
 
         // Costo iniziale di ogni auto-clicker
         autoClickerCost: [100, 150, 400, 800],
+
+        //condizione vittoria
+        condVittoria: false,
 
         // Array che conterranno i riferimenti ai pulsanti del gioco
         clickButtons: [],
@@ -545,7 +548,7 @@ const app = createApp({
               break;
           }
 
-          // Controllo vittoria: tutti gli upgrade al livello 9
+          // Controllo vittoria: tutti gli upgrade al livello 10
           for(let i=0;i<this.livelloUpgrade.length;i++) {
             if(this.livelloUpgrade[i] < 9) return;
           }
@@ -654,7 +657,8 @@ const app = createApp({
 
       // Mostra la schermata di vittoria
       vittoria() {
-        this.$refs.victoryScreen.style.display = 'block';
+        if(!this.condVittoria) this.$refs.victoryScreen.style.display = 'block';
+        this.condVittoria = true;
       }
     },
 });
