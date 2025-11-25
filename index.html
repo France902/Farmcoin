@@ -394,7 +394,7 @@
                 <!-- Auto-clicker: nascosto finché non sbloccato via upgrade -->
                 <button class="rettangularButton" @click="autoClicker(0)" :ref="el => autoClickers.push(el)"
                         style="opacity: 0; margin-left: 20vw; margin-top: 8vh; padding: 0.5vw; font-size: 3vh; background-color: rgb(166, 2, 2); border-radius: 15%;">
-                    +{{contAutoClicker[0]+1}} auto clicker {{ (contAutoClicker[0]+1) * 100 }}$
+                    +{{contAutoClicker[0]+1}} auto clicker {{ (contAutoClicker[0]+1) * autoClickerCost[0] }}$
                 </button>
             </div>
 
@@ -414,7 +414,7 @@
                     {{ costoUpgrade[1] }}$
                 </button>
                 <button class="rettangularButton" @click="autoClicker(1)" :ref="el => autoClickers.push(el)" style="opacity: 0; margin-left: 20vw; margin-top: 8vh; padding: 0.5vw; font-size: 3vh; background-color: rgb(166, 2, 2); border-radius: 15%;">
-                    +{{contAutoClicker[1]+1}} auto clicker {{ (contAutoClicker[1]+1) * 220 }}$
+                    +{{contAutoClicker[1]+1}} auto clicker {{ (contAutoClicker[1]+1) * autoClickerCost[1] }}$
                 </button>
             </div>
 
@@ -428,13 +428,13 @@
             <!-- THIRD AREA -->
             <div ref="thirdArea" style="left: 75vw; top: -5vh; z-index: 9998; position: absolute; pointer-events: none; width: 50vw; height: 50vh; display: none;">
                 <button class="primaryButton" @click="click(2)" :ref="el => clickButtons.push(el)" style="background-color: rgb(188, 2, 2); margin-left: 17vw;">🍅</button>
-                <button class="primaryButton" @click="sell(2)" :ref="el => sellButtons.push(el)" style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); margin-left: 11vw;">$</button>
+                <button class="primaryButton" @click="sell(2)" :ref="el => sellButtons.push(el)" style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); margin-left: 9vw;">$</button>
                 <button class="rettangularButton" @click="upgrade(2)" :ref="el => upgradeButtons.push(el)" style="opacity: 0; margin-left: 12vw;">
                     <img src="upgrade_icon.png" id="imgPrimaryButton">
                     {{ costoUpgrade[2] }}$
                 </button>
                 <button class="rettangularButton" @click="autoClicker(2)" :ref="el => autoClickers.push(el)" style="opacity: 0; margin-left: -7vw; margin-top: 8vh; padding: 0.5vw; font-size: 3vh; background-color: rgb(166, 2, 2); border-radius: 15%;">
-                    +{{contAutoClicker[2]+1}} auto clicker {{ (contAutoClicker[2]+1) * 500 }}$
+                    +{{contAutoClicker[2]+1}} auto clicker {{ (contAutoClicker[2]+1) *autoClickerCost[2] }}$
                 </button>
             </div>
 
@@ -448,13 +448,13 @@
             <!-- FOURTH AREA -->
             <div ref="fourthArea" style="left: 75vw; top: 42vh; z-index: 9998; position: absolute; pointer-events: none; width: 50vw; height: 50vh; display: none;">
                 <button class="primaryButton" @click="click(3)" :ref="el => clickButtons.push(el)" style="background-color: rgb(188, 2, 2); margin-left: 17vw;">🥔</button>
-                <button class="primaryButton" @click="sell(3)" :ref="el => sellButtons.push(el)" style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); margin-left: 11vw;">$</button>
+                <button class="primaryButton" @click="sell(3)" :ref="el => sellButtons.push(el)" style="opacity: 0; background-color: rgba(3, 227, 3, 0.8); margin-left: 9vw;">$</button>
                 <button class="rettangularButton" @click="upgrade(3)" :ref="el => upgradeButtons.push(el)" style="opacity: 0; margin-left: 12vw;">
                     <img src="upgrade_icon.png" id="imgPrimaryButton">
                     {{ costoUpgrade[3] }}$
                 </button>
                 <button class="rettangularButton" @click="autoClicker(3)" :ref="el => autoClickers.push(el)" style="opacity: 0; margin-left: -7vw; margin-top: 8vh; padding: 0.5vw; font-size: 3vh; background-color: rgb(166, 2, 2); border-radius: 15%;">
-                    +{{contAutoClicker[3]+1}} auto clicker {{ (contAutoClicker[3]+1) * 500 }}$
+                    +{{contAutoClicker[3]+1}} auto clicker {{ (contAutoClicker[3]+1) * autoClickerCost[3] }}$
                 </button>
             </div>
         </div>
